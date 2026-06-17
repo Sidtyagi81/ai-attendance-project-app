@@ -28,5 +28,3 @@ def share_subject_dialog(subject_name, subject_code):
     with col2:
         st.markdown('### Scan to Join')
         st.image(out.getvalue(), caption='QRCODE for class joining')
-
-        

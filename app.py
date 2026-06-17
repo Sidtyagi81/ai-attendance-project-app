@@ -1,4 +1,3 @@
-
 import streamlit as st
 
 from src.screens.home_screen import home_screen
