@@ -1,118 +1,93 @@
 import streamlit as st
-import textwrap
 
 
 def subject_card(name, code, section, stats=None, footer_callback=None):
 
-    html = f"""
-<div style="
-    background: white;
-    padding: 25px;
-    border-radius: 20px;
-    border: 1px solid #111827;
-    margin-bottom: 20px;
-    color: #1e293b;
-">
-
-    <h3 style="
-        margin: 0;
-        color: #1e293b;
-        font-size: 1.5rem;
-        font-weight: 700;
-    ">
-        {name}
-    </h3>
-
-    <p style="
-        color: #475569;
-        margin: 10px 0;
-        font-size: 1rem;
-    ">
-        Code :
-        <span style="
-            background: #E0E3FF;
-            color: #5865F2;
-            padding: 3px 9px;
-            border-radius: 6px;
-            font-weight: 600;
-        ">
-            {code}
-        </span>
-
-        <span style="
-            color: #64748b;
-        ">
-            &nbsp;|&nbsp; Section : {section}
-        </span>
-    </p>
-"""
+    stats_html = ""
 
     if stats:
-
-        html += """
-<div style="
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-top: 12px;
-">
-"""
-
         for icon, label, value in stats:
+            stats_html += f"""
+            <div style="
+                background-color: #fce7f3;
+                border: 1px solid #f9a8d4;
+                border-radius: 12px;
+                padding: 8px 14px;
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                margin-right: 8px;
+                margin-top: 8px;
+                font-size: 15px;
+                font-weight: 600;
+                color: #1e293b;
+            ">
+                <span>{icon}</span>
+                <span style="color: #1e293b; font-weight: 700;">
+                    {value}
+                </span>
+                <span style="color: #334155; font-weight: 600;">
+                    {label}
+                </span>
+            </div>
+            """
 
-            html += f"""
-<div style="
-    background: #FCE7F3;
-    color: #1e293b;
-    padding: 8px 14px;
-    border-radius: 12px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    border: 1px solid #F9A8D4;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-">
-
-    <span style="
-        font-size: 1rem;
+    html = f"""
+    <div style="
+        background-color: white;
+        border: 1px solid #111827;
+        border-radius: 20px;
+        padding: 25px;
+        margin-bottom: 15px;
+        width: 100%;
+        box-sizing: border-box;
     ">
-        {icon}
-    </span>
 
-    <span style="
-        color: #1e293b;
-        font-weight: 700;
-    ">
-        {value}
-    </span>
+        <div style="
+            color: #1e293b;
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        ">
+            {name}
+        </div>
 
-    <span style="
-        color: #334155;
-        font-weight: 600;
-    ">
-        {label}
-    </span>
+        <div style="
+            color: #475569;
+            font-size: 17px;
+            margin-bottom: 10px;
+        ">
+            Code :
 
-</div>
-"""
+            <span style="
+                background-color: #e0e3ff;
+                color: #5865f2;
+                padding: 4px 9px;
+                border-radius: 6px;
+                font-weight: 600;
+            ">
+                {code}
+            </span>
 
-        html += """
-</div>
-"""
+            <span style="color: #64748b;">
+                &nbsp; | &nbsp; Section : {section}
+            </span>
+        </div>
 
-    html += """
-</div>
-"""
+        <div style="
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+        ">
+            {stats_html}
+        </div>
+
+    </div>
+    """
 
     # IMPORTANT:
-    # Remove indentation before passing HTML to Streamlit.
-    html = textwrap.dedent(html).strip()
-
-    st.markdown(
-        html,
-        unsafe_allow_html=True
-    )
+    # Use st.html(), NOT st.markdown().
+    st.html(html)
 
     if footer_callback:
         footer_callback()
